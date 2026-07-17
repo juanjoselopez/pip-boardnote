@@ -1,0 +1,246 @@
+/* Variables del tema oscuro (Catppuccin Mocha adaptado) */
+:root {
+  --bg-primary: #1e1e2e;
+  --bg-secondary: #181825;
+  --bg-surface: #313244;
+  --text-primary: #cdd6f4;
+  --text-secondary: #a6adc8;
+  --border: #45475a;
+  --accent: #89b4fa;
+  --accent-hover: #74c7ec;
+  --danger: #f38ba8;
+  --success: #a6e3a1;
+  --warning: #f9e2af;
+  --window-opacity: 1;
+  --titlebar-height: 32px;
+  --toolbar-height: 36px;
+  --statusbar-height: 24px;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: transparent;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 30, 46, var(--window-opacity));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: opacity 0.15s ease, background 0.3s ease;
+}
+
+/* Permitir que los dropdowns del toolbar sobresalgan */
+#toolbar {
+  overflow: visible !important;
+}
+
+/* Titlebar */
+#titlebar {
+  height: var(--titlebar-height);
+  min-height: var(--titlebar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  border-radius: 8px 8px 0 0;
+  -webkit-app-region: drag;
+}
+
+#title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+#window-controls {
+  display: flex;
+  gap: 4px;
+  -webkit-app-region: no-drag;
+}
+
+.window-btn {
+  width: 28px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.window-btn:hover {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.window-btn:active {
+  opacity: 0.7;
+}
+
+/* Toolbar collapsed */
+.toolbar-collapsed #toolbar {
+  display: none;
+}
+
+.toolbar-collapsed #canvas-container {
+  flex: 1;
+}
+
+/* Canvas */
+#canvas-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+#board-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+#selection-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Status bar */
+#status-bar {
+  height: var(--statusbar-height);
+  min-height: var(--statusbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 8px 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+#status-bar .sep {
+  width: 1px;
+  height: 12px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.status-badge {
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.status-badge.hidden {
+  display: none;
+}
+
+#opacity-slider {
+  width: 60px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--bg-surface);
+  border-radius: 2px;
+  cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+#opacity-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg-primary);
+  cursor: pointer;
+}
+
+/* Click-through overlay */
+#click-through-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#click-through-overlay.hidden {
+  display: none;
+}
+
+.ct-overlay-content {
+  background: rgba(30, 30, 46, 0.85);
+  border: 2px solid var(--warning);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.ct-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.ct-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.ct-shortcut {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+}

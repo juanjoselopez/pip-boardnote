@@ -1,0 +1,39 @@
+/* Estilos específicos del canvas y la hoja */
+
+#canvas-container {
+  background: transparent;
+}
+
+/* Cursor según modo */
+.mode-draw #board-canvas {
+  cursor: crosshair;
+}
+
+.mode-select #board-canvas {
+  cursor: default;
+}
+
+.mode-select #board-canvas .stroke-selected {
+  cursor: move;
+}
+
+.mode-hand #board-canvas {
+  cursor: grab;
+}
+
+.mode-hand #board-canvas:active {
+  cursor: grabbing;
+}
+
+/* Hoja renderizada en canvas (sombra y bordes) */
+/* La hoja se dibuja en el canvas mediante canvas-engine.ts */
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#app {
+  animation: fadeIn 0.2s ease;
+}

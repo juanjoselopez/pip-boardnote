@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PiP BoardNote</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="titlebar" class="drag-region">
+        <span id="title">PiP BoardNote</span>
+        <div id="window-controls">
+          <button id="btn-toggle-toolbar" class="window-btn" title="Ocultar barra de herramientas">▼</button>
+          <button id="btn-minimize" class="window-btn" title="Minimizar">─</button>
+          <button id="btn-close" class="window-btn" title="Cerrar">✕</button>
+        </div>
+      </div>
+      <div id="toolbar">
+        <span class="separator"></span>
+        <button id="btn-open" class="toolbar-btn" title="Abrir proyecto (Ctrl+O)">📂</button>
+        <span class="separator"></span>
+        <button class="toolbar-btn mode-btn" data-mode="draw" title="Modo dibujo (D)">✏️</button>
+        <button class="toolbar-btn mode-btn" data-mode="select" title="Modo selección (S)">🖱</button>
+        <button class="toolbar-btn mode-btn" data-mode="hand" title="Modo mano (H)">🖐</button>
+        <span class="separator"></span>
+        <button class="toolbar-btn" data-tool="pen" title="Lápiz">🖊</button>
+        <button class="toolbar-btn" data-tool="highlighter" title="Resaltador">🖌</button>
+        <button class="toolbar-btn" data-tool="eraser" title="Borrador">🧹</button>
+        <span class="separator"></span>
+        <button id="btn-undo" class="toolbar-btn" title="Deshacer (Ctrl+Z)">↩</button>
+        <button id="btn-redo" class="toolbar-btn" title="Rehacer (Ctrl+Y)">↪</button>
+        <span class="separator"></span>
+        <button id="btn-color" class="toolbar-btn color-btn" title="Color de trazo">🎨</button>
+        <div id="color-picker" class="color-picker-panel hidden">
+          <div class="cp-sl-field" id="cp-sl-field">
+            <div class="cp-sl-cursor" id="cp-sl-cursor"></div>
+          </div>
+          <div class="cp-hue-bar" id="cp-hue-bar">
+            <div class="cp-hue-cursor" id="cp-hue-cursor"></div>
+          </div>
+          <div class="cp-alpha-bar" id="cp-alpha-bar">
+            <div class="cp-alpha-cursor" id="cp-alpha-cursor"></div>
+          </div>
+          <div class="cp-footer">
+            <div class="cp-preview" id="cp-preview">
+              <div class="cp-preview-inner" id="cp-preview-inner"></div>
+            </div>
+            <div class="cp-hex-display">
+              <span class="cp-hash">#</span>
+              <input type="text" id="cp-hex-input" class="cp-hex-input" maxlength="8" spellcheck="false" />
+            </div>
+          </div>
+        </div>
+        <select id="width-select" title="Grosor de trazo">
+          <option value="0.5">Fino</option>
+          <option value="1.0" selected>Medio</option>
+          <option value="2.0">Grueso</option>
+          <option value="3.0">Muy grueso</option>
+        </select>
+        <select id="smooth-select" title="Suavizado de trazo">
+          <option value="off">Recto</option>
+          <option value="low">Bajo</option>
+          <option value="medium">Medio</option>
+          <option value="high" selected>Alto</option>
+        </select>
+        <span class="separator"></span>
+        <select id="format-select" title="Formato de hoja">
+          <option value="a4">A4</option>
+          <option value="letter">Carta</option>
+          <option value="a5">A5</option>
+          <option value="legal">Oficio</option>
+          <option value="a6">A6</option>
+          <option value="b5">B5</option>
+        </select>
+        <button id="btn-orientation" class="toolbar-btn" title="Alternar orientación">⇄</button>
+        <button id="btn-free-canvas" class="toolbar-btn" title="Lienzo libre (sin hoja)">🖼</button>
+        <span class="separator"></span>
+        <button class="toolbar-btn" data-cmd="zoom-out" title="Alejar (Ctrl+-)">−</button>
+        <span id="zoom-level">100%</span>
+        <button class="toolbar-btn" data-cmd="zoom-in" title="Acercar (Ctrl++)">+</button>
+        <button class="toolbar-btn" data-cmd="zoom-reset" title="Restablecer (Ctrl+0)">⟲</button>
+        <span class="separator"></span>
+        <button id="btn-theme" class="toolbar-btn" title="Cambiar a tema claro">☾</button>
+        <button id="btn-clickthrough" class="toolbar-btn" title="Activar modo click-through">⊘</button>
+        <span class="separator"></span>
+        <button id="btn-export" class="toolbar-btn" title="Exportar">📤</button>
+        <div id="export-dropdown" class="dropdown-menu hidden">
+          <button data-format="svg">🖼 SVG</button>
+          <button data-format="html">🌐 HTML</button>
+        </div>
+        <span class="separator"></span>
+        <button id="btn-transparent" class="toolbar-btn" title="Hoja transparente (solo borde)">👻</button>
+        <button id="btn-clear" class="toolbar-btn" title="Borrar todo">🗑</button>
+      </div>
+      <div id="canvas-container">
+        <canvas id="board-canvas"></canvas>
+        <div id="selection-overlay"></div>
+      </div>
+      <div id="status-bar">
+        <span id="mode-indicator">✏️ Dibujo</span>
+        <span class="sep"></span>
+        <span id="format-indicator">A4</span>
+        <span class="sep"></span>
+        <span id="zoom-display">100%</span>
+        <span class="sep"></span>
+        <span id="stroke-count">0 trazos</span>
+        <span class="sep"></span>
+        <span id="pip-indicator" class="status-badge active">PiP</span>
+        <span id="ct-indicator" class="status-badge hidden">⊘</span>
+        <span class="sep"></span>
+        <input type="range" id="opacity-slider" min="0.5" max="1.0" step="0.05" value="1.0" title="Opacidad de la ventana">
+      </div>
+      <div id="click-through-overlay" class="hidden">
+        <div class="ct-overlay-content">
+          <span class="ct-icon">⊘</span>
+          <span class="ct-text">Modo click-through activo</span>
+          <span class="ct-shortcut">Salir: Ctrl + Shift + K</span>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

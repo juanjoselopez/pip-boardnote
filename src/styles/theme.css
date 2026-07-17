@@ -1,0 +1,33 @@
+/* Tema claro */
+body.light-theme {
+  --bg-primary: #eff1f5;
+  --bg-secondary: #e6e9ef;
+  --bg-surface: #ccd0da;
+  --text-primary: #4c4f69;
+  --text-secondary: #6c6f85;
+  --border: #bcc0cc;
+  --accent: #1e66f5;
+  --accent-hover: #2a7cf6;
+}
+
+body.light-theme #app {
+  background: rgba(239, 241, 245, var(--window-opacity));
+}
+
+body.light-theme .ct-overlay-content {
+  background: rgba(239, 241, 245, 0.9);
+  border-color: var(--accent);
+}
+
+/* Transiciones suaves globlales */
+#app,
+#toolbar,
+#titlebar,
+#status-bar,
+.toolbar-btn,
+.toolbar-btn *,
+select,
+.color-picker,
+.dropdown-menu {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
